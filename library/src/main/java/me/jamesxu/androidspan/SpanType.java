@@ -1,4 +1,4 @@
-package jamesxu.androidspan;
+package me.jamesxu.androidspan;
 
 enum SpanType {
     BULLET,

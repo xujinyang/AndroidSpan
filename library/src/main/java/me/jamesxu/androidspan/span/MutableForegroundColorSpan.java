@@ -1,4 +1,4 @@
-package jamesxu.androidspan.span;
+package me.jamesxu.androidspan.span;
 
 import android.graphics.Color;
 import android.os.Parcel;

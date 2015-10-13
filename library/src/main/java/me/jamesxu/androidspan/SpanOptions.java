@@ -1,4 +1,4 @@
-package jamesxu.androidspan;
+package me.jamesxu.androidspan;
 
 import android.annotation.TargetApi;
 import android.content.Context;
