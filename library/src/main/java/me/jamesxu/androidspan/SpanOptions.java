@@ -22,6 +22,7 @@ import android.text.style.SubscriptSpan;
 import android.text.style.SuperscriptSpan;
 import android.text.style.TextAppearanceSpan;
 import android.text.style.TypefaceSpan;
+import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
 
 import java.util.ArrayList;
@@ -52,6 +53,12 @@ public class SpanOptions {
 
     public SpanOptions addBulletSpan(int gapWidth, int color) {
         BulletSpan span = new BulletSpan(gapWidth, color);
+        listSpan.add(span);
+        return this;
+    }
+
+    public SpanOptions addUrlSpan(String url) {
+        URLSpan span = new URLSpan(url);
         listSpan.add(span);
         return this;
     }

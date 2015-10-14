@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.text);
 //        setText();
         fireWork();
-
     }
 
     private void fireWork() {

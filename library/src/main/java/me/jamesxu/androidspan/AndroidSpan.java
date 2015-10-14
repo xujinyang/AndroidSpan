@@ -25,6 +25,7 @@ import android.text.style.SubscriptSpan;
 import android.text.style.SuperscriptSpan;
 import android.text.style.TextAppearanceSpan;
 import android.text.style.TypefaceSpan;
+import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
 
 import java.util.Locale;
@@ -67,6 +68,12 @@ public class AndroidSpan {
     public AndroidSpan drawQuoteSpan(String text, int color) {
         QuoteSpan span = new QuoteSpan(color);
         drawSpan(span, text);
+        return this;
+    }
+
+    public AndroidSpan drawURLSpan(String url) {
+        URLSpan span = new URLSpan(url);
+        drawSpan(span, url);
         return this;
     }
 
