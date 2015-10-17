@@ -57,9 +57,16 @@ public class SpanOptions {
         return this;
     }
 
-    public SpanOptions addUrlSpan(String url) {
-        URLSpan span = new URLSpan(url);
-        listSpan.add(span);
+    /**
+     * URL效果
+     * 需要实现textView.setMovementMethod(LinkMovementMethod.getInstance());
+     *
+     * @param url 格式为：电话：tel:18721850636，邮箱：mailto:1119117546@qq.com，网站：http://www.baidu.com,短信：mms:4155551212，彩信：mmsto:18721850636,地图：geo:38.899533,-77.036476
+     * @return
+     */
+    public SpanOptions addURLSpan(String url) {
+        URLSpan Urlspan = new URLSpan(url);
+        listSpan.add(Urlspan);
         return this;
     }
 
@@ -192,6 +199,18 @@ public class SpanOptions {
     public SpanOptions addRelativeSize(float size) {
         RelativeSizeSpan span = new RelativeSizeSpan(size);
         listSpan.add(span);
+        return this;
+    }
+
+    /**
+     * 自定义Span
+     *
+     * @param object
+     * @return
+     */
+
+    public SpanOptions addSpan(Object object) {
+        listSpan.add(object);
         return this;
     }
 

@@ -3,9 +3,7 @@ package me.jamesxu.androidspan;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.BlurMaskFilter;
-import android.net.Uri;
 import android.os.Build;
 import android.text.Layout;
 import android.text.SpannableStringBuilder;
@@ -14,7 +12,6 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.AlignmentSpan;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.BulletSpan;
-import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.LocaleSpan;
@@ -30,8 +27,6 @@ import android.text.style.TextAppearanceSpan;
 import android.text.style.TypefaceSpan;
 import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
-import android.view.View;
-import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -77,29 +72,16 @@ public class AndroidSpan {
     }
 
     /**
-     * 点击效果
+     * URL效果
      * 需要实现textView.setMovementMethod(LinkMovementMethod.getInstance());
      *
      * @param url 格式为：电话：tel:18721850636，邮箱：mailto:1119117546@qq.com，网站：http://www.baidu.com,短信：mms:4155551212，彩信：mmsto:18721850636,地图：geo:38.899533,-77.036476
-     * @param context
-     * @param clickSpan 默认null 实现为交给系统跳转
      * @return
      */
 
-    public AndroidSpan drawURLSpan(final String url, final Context context, ClickableSpan clickSpan) {
+    public AndroidSpan drawURLSpan(final String url) {
         URLSpan Urlspan = new URLSpan(url);
-        if (clickSpan == null) {
-            clickSpan = new ClickableSpan() {
-                @Override
-                public void onClick(View view) {
-                    Uri uri = Uri.parse(url);
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    context.startActivity(intent);
-                    Toast.makeText(context, url, Toast.LENGTH_SHORT).show();
-                }
-            };
-        }
-        drawSpan(url, Urlspan, clickSpan);
+        drawSpan(url, Urlspan);
         return this;
     }
 
@@ -209,7 +191,6 @@ public class AndroidSpan {
         return this;
     }
 
-
     /**
      * 文本颜色
      *
@@ -235,12 +216,10 @@ public class AndroidSpan {
         return this;
     }
 
-    public void drawSpan(String text, Object... spans) {
+    public void drawSpan(String text, Object span) {
         WordPosition wordPosition = getWordPosition(text);
         spannableStringBuilder.append(text);
-        for (Object span : spans) {
-            spannableStringBuilder.setSpan(span, wordPosition.start, wordPosition.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
+        spannableStringBuilder.setSpan(span, wordPosition.start, wordPosition.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     public SpannableStringBuilder getSpanText() {
