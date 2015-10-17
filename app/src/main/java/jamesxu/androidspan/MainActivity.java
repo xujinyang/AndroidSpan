@@ -4,6 +4,7 @@ import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
 import me.jamesxu.androidspan.AndroidSpan;
@@ -30,12 +31,16 @@ public class MainActivity extends AppCompatActivity {
                 .drawWithOptions("综合效果", new SpanOptions().addBackgroundColorSpan(Color.GREEN).addUnderlineSpan())
                 .drawImageSpan("来个图片试试", getApplicationContext(), R.mipmap.ic_launcher)
                 .drawBulletSpan("bullet", 20, Color.GREEN)
-                .drawStrikethroughSpan("中线穿过")
-                .drawURLSpan("www.baidu.com")
+                .drawURLSpan("tel:18721850636", getApplicationContext(), null)
+                .drawStrikethroughSpan("删除线")
+                .drawURLSpan("http://www.baidu.com", getApplicationContext(), null)
+                .drawStyleSpan("粗体", android.graphics.Typeface.BOLD)
+                .drawSubscriptSpan("上标")
+                .drawSuperscriptSpan("下标")
                 .drawMaskFilterSpan("模糊效果", 1f, BlurMaskFilter.Blur.NORMAL);
 
         textView.setText(androidSpan.getSpanText());
-
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
 }

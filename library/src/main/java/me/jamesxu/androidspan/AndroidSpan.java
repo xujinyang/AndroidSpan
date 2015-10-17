@@ -3,7 +3,9 @@ package me.jamesxu.androidspan;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BlurMaskFilter;
+import android.net.Uri;
 import android.os.Build;
 import android.text.Layout;
 import android.text.SpannableStringBuilder;
@@ -12,6 +14,7 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.AlignmentSpan;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.BulletSpan;
+import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.LocaleSpan;
@@ -27,6 +30,8 @@ import android.text.style.TextAppearanceSpan;
 import android.text.style.TypefaceSpan;
 import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
+import android.view.View;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -55,43 +60,64 @@ public class AndroidSpan {
      */
     public AndroidSpan drawUnderlineSpan(String text) {
         UnderlineSpan span = new UnderlineSpan();
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
     public AndroidSpan drawBulletSpan(String text, int gapWidth, int color) {
         BulletSpan span = new BulletSpan(gapWidth, color);
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
     public AndroidSpan drawQuoteSpan(String text, int color) {
         QuoteSpan span = new QuoteSpan(color);
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
-    public AndroidSpan drawURLSpan(String url) {
-        URLSpan span = new URLSpan(url);
-        drawSpan(span, url);
+    /**
+     * 点击效果
+     * 需要实现textView.setMovementMethod(LinkMovementMethod.getInstance());
+     *
+     * @param url 格式为：电话：tel:18721850636，邮箱：mailto:1119117546@qq.com，网站：http://www.baidu.com,短信：mms:4155551212，彩信：mmsto:18721850636,地图：geo:38.899533,-77.036476
+     * @param context
+     * @param clickSpan 默认null 实现为交给系统跳转
+     * @return
+     */
+
+    public AndroidSpan drawURLSpan(final String url, final Context context, ClickableSpan clickSpan) {
+        URLSpan Urlspan = new URLSpan(url);
+        if (clickSpan == null) {
+            clickSpan = new ClickableSpan() {
+                @Override
+                public void onClick(View view) {
+                    Uri uri = Uri.parse(url);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    context.startActivity(intent);
+                    Toast.makeText(context, url, Toast.LENGTH_SHORT).show();
+                }
+            };
+        }
+        drawSpan(url, Urlspan, clickSpan);
         return this;
     }
 
     public AndroidSpan drawAlignmentSpan(String text, Layout.Alignment align) {
         AlignmentSpan.Standard span = new AlignmentSpan.Standard(align);
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
     public AndroidSpan drawStrikethroughSpan(String text) {
         StrikethroughSpan span = new StrikethroughSpan();
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
     public AndroidSpan drawBackgroundColorSpan(String text, int color) {
         BackgroundColorSpan span = new BackgroundColorSpan(color);
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
@@ -103,48 +129,48 @@ public class AndroidSpan {
      */
     public AndroidSpan drawMaskFilterSpan(String text, float density, BlurMaskFilter.Blur style) {
         MaskFilterSpan span = new MaskFilterSpan(new BlurMaskFilter(density, style));
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
     public AndroidSpan drawSubscriptSpan(String text) {
         SubscriptSpan span = new SubscriptSpan();
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
     public AndroidSpan drawSuperscriptSpan(String text) {
         SuperscriptSpan span = new SuperscriptSpan();
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
     /**
      * @param text
-     * @param style Typeface.BOLD | Typeface.ITALIC
+     * @param style Typeface.BOLD | Typeface.ITALIC |Typeface.BOLD_ITALIC
      * @return
      */
     public AndroidSpan drawStyleSpan(String text, int style) {
         StyleSpan span = new StyleSpan(style);
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
     public AndroidSpan drawAbsoluteSizeSpan(String text, int size, boolean dip) {
         AbsoluteSizeSpan span = new AbsoluteSizeSpan(size, dip);
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
     public AndroidSpan drawRelativeSizeSpan(String text, float proportion) {
         RelativeSizeSpan span = new RelativeSizeSpan(proportion);
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
     public AndroidSpan drawTextAppearanceSpan(String text, Context context, int appearance) {
         TextAppearanceSpan span = new TextAppearanceSpan(context, appearance);
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
@@ -156,13 +182,13 @@ public class AndroidSpan {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public AndroidSpan drawLocaleSpan(String text, Locale locale) {
         LocaleSpan span = new LocaleSpan(locale);
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
     public AndroidSpan drawScaleXSpan(String text, float proportion) {
         ScaleXSpan span = new ScaleXSpan(proportion);
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
@@ -173,13 +199,13 @@ public class AndroidSpan {
      */
     public AndroidSpan drawTypefaceSpan(String text, String typeface) {
         TypefaceSpan span = new TypefaceSpan(typeface);
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
     public AndroidSpan drawImageSpan(String text, Context context, int imgId) {
         ImageSpan span = new ImageSpan(context, imgId);
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
@@ -192,7 +218,7 @@ public class AndroidSpan {
      */
     public AndroidSpan drawForegroundColor(String text, int color) {
         ForegroundColorSpan span = new ForegroundColorSpan(color);
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
@@ -205,14 +231,16 @@ public class AndroidSpan {
      */
     public AndroidSpan drawRelativeSize(String text, float size) {
         RelativeSizeSpan span = new RelativeSizeSpan(size);
-        drawSpan(span, text);
+        drawSpan(text, span);
         return this;
     }
 
-    private void drawSpan(Object span, String text) {
+    public void drawSpan(String text, Object... spans) {
         WordPosition wordPosition = getWordPosition(text);
         spannableStringBuilder.append(text);
-        spannableStringBuilder.setSpan(span, wordPosition.start, wordPosition.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        for (Object span : spans) {
+            spannableStringBuilder.setSpan(span, wordPosition.start, wordPosition.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
     }
 
     public SpannableStringBuilder getSpanText() {
