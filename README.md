@@ -9,7 +9,7 @@ The AndroidSpan is a tool library for easy to use Android SpannableStringBuilder
 #Gradle
 ```
 dependencies {
-   compile 'com.daimajia.numberprogressbar:library:1.2@aar'
+   compile 'com.xujinyang.AndroidSpan:library:1.0.2'
 }
 ```
 ##### Use it in your own code:
