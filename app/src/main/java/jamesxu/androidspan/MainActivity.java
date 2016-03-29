@@ -28,12 +28,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setText() {
         AndroidSpan androidSpan = new AndroidSpan()
+                .drawBulletSpan("bullet", 40, Color.GREEN)
                 .drawUnderlineSpan("测试文本")
-                .drawRelativeSize("我要变大", 2.0f)
                 .drawForegroundColor("红色的文本", Color.RED)
                 .drawImageSpan("来个图片试试", getApplicationContext(), R.mipmap.ic_launcher)
-                .drawBulletSpan("bullet", 20, Color.GREEN)
                 .drawURLSpan("tel:18721850636")
+                .drawCommonSpan("没有效果")
                 .drawStrikethroughSpan("删除线")
                 .drawURLSpan("http://www.baidu.com")
                 .drawStyleSpan("粗体", android.graphics.Typeface.BOLD)

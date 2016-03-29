@@ -133,6 +133,11 @@ public class SpanOptions {
         return this;
     }
 
+    /**
+     * 同比放大索小
+     *
+     * @return
+     */
     public SpanOptions addRelativeSizeSpan(float proportion) {
         RelativeSizeSpan span = new RelativeSizeSpan(proportion);
         listSpan.add(span);
@@ -190,17 +195,6 @@ public class SpanOptions {
         return this;
     }
 
-    /**
-     * 同比放大索小
-     *
-     * @param size
-     * @return
-     */
-    public SpanOptions addRelativeSize(float size) {
-        RelativeSizeSpan span = new RelativeSizeSpan(size);
-        listSpan.add(span);
-        return this;
-    }
 
     /**
      * 自定义Span

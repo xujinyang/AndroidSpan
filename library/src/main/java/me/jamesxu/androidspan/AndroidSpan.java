@@ -59,12 +59,37 @@ public class AndroidSpan {
         return this;
     }
 
+    /**
+     * 没有效果
+     *
+     * @param text
+     * @return
+     */
+    public AndroidSpan drawCommonSpan(String text) {
+        drawSpan(text, null);
+        return this;
+    }
+
+    /**
+     * 段落的开始处加上项目符号
+     *
+     * @param gapWidth 项目符号和文本之间的间隙
+     * @param color    项目符号的颜色，默认为透明
+     * @return
+     */
     public AndroidSpan drawBulletSpan(String text, int gapWidth, int color) {
         BulletSpan span = new BulletSpan(gapWidth, color);
         drawSpan(text, span);
         return this;
     }
 
+    /**
+     * 左侧添加一条表示引用的竖线
+     *
+     * @param text
+     * @param color
+     * @return
+     */
     public AndroidSpan drawQuoteSpan(String text, int color) {
         QuoteSpan span = new QuoteSpan(color);
         drawSpan(text, span);
@@ -85,18 +110,38 @@ public class AndroidSpan {
         return this;
     }
 
+    /**
+     * 标准文本对齐样式
+     *
+     * @param text
+     * @param align "ALIGN_CENTER"、"ALIGN_NORMAL" 或"ALIGN_OPPOSITE"中的之一
+     * @return
+     */
     public AndroidSpan drawAlignmentSpan(String text, Layout.Alignment align) {
         AlignmentSpan.Standard span = new AlignmentSpan.Standard(align);
         drawSpan(text, span);
         return this;
     }
 
+    /**
+     * 删除线样式
+     *
+     * @param text
+     * @return
+     */
     public AndroidSpan drawStrikethroughSpan(String text) {
         StrikethroughSpan span = new StrikethroughSpan();
         drawSpan(text, span);
         return this;
     }
 
+    /**
+     * 背景样式
+     *
+     * @param text
+     * @param color
+     * @return
+     */
     public AndroidSpan drawBackgroundColorSpan(String text, int color) {
         BackgroundColorSpan span = new BackgroundColorSpan(color);
         drawSpan(text, span);
@@ -104,6 +149,8 @@ public class AndroidSpan {
     }
 
     /**
+     * 模糊效果
+     *
      * @param text
      * @param density
      * @param style   BlurMaskFilter.Blur.NORMAL
@@ -115,12 +162,23 @@ public class AndroidSpan {
         return this;
     }
 
+    /**
+     * 脚注样式，比如化学式的常见写法，当然，还可以对脚注的文字做一定的缩放
+     *
+     * @param text
+     * @return
+     */
     public AndroidSpan drawSubscriptSpan(String text) {
         SubscriptSpan span = new SubscriptSpan();
         drawSpan(text, span);
         return this;
     }
 
+    /**
+     * 上标样式，比如数学上的次方运算
+     * @param text
+     * @return
+     */
     public AndroidSpan drawSuperscriptSpan(String text) {
         SuperscriptSpan span = new SuperscriptSpan();
         drawSpan(text, span);
@@ -128,6 +186,7 @@ public class AndroidSpan {
     }
 
     /**
+     * 由正常、粗体、斜体和同时加粗倾斜四种样式
      * @param text
      * @param style Typeface.BOLD | Typeface.ITALIC |Typeface.BOLD_ITALIC
      * @return
@@ -138,18 +197,38 @@ public class AndroidSpan {
         return this;
     }
 
+    /**
+     * 指定绝对尺寸来改变文本的字体大小
+     * @param text
+     * @param size
+     * @param dip
+     * @return
+     */
     public AndroidSpan drawAbsoluteSizeSpan(String text, int size, boolean dip) {
         AbsoluteSizeSpan span = new AbsoluteSizeSpan(size, dip);
         drawSpan(text, span);
         return this;
     }
 
+    /**
+     * 同比放大索小
+     *
+     * @param text
+     * @return
+     */
     public AndroidSpan drawRelativeSizeSpan(String text, float proportion) {
         RelativeSizeSpan span = new RelativeSizeSpan(proportion);
         drawSpan(text, span);
         return this;
     }
 
+    /**
+     * style文件来定义文本样式
+     * @param text
+     * @param context
+     * @param appearance
+     * @return
+     */
     public AndroidSpan drawTextAppearanceSpan(String text, Context context, int appearance) {
         TextAppearanceSpan span = new TextAppearanceSpan(context, appearance);
         drawSpan(text, span);
@@ -168,6 +247,12 @@ public class AndroidSpan {
         return this;
     }
 
+    /**
+     * 缩放X大小
+     * @param text
+     * @param proportion
+     * @return
+     */
     public AndroidSpan drawScaleXSpan(String text, float proportion) {
         ScaleXSpan span = new ScaleXSpan(proportion);
         drawSpan(text, span);
@@ -175,6 +260,7 @@ public class AndroidSpan {
     }
 
     /**
+     * 字体样式
      * @param text
      * @param typeface serif
      * @return
@@ -185,6 +271,13 @@ public class AndroidSpan {
         return this;
     }
 
+    /**
+     * 图片样式
+     * @param text
+     * @param context
+     * @param imgId
+     * @return
+     */
     public AndroidSpan drawImageSpan(String text, Context context, int imgId) {
         ImageSpan span = new ImageSpan(context, imgId);
         drawSpan(text, span);
@@ -203,22 +296,12 @@ public class AndroidSpan {
         return this;
     }
 
-    /**
-     * 同比放大索小
-     *
-     * @param text
-     * @param size
-     * @return
-     */
-    public AndroidSpan drawRelativeSize(String text, float size) {
-        RelativeSizeSpan span = new RelativeSizeSpan(size);
-        drawSpan(text, span);
-        return this;
-    }
-
     public void drawSpan(String text, Object span) {
         WordPosition wordPosition = getWordPosition(text);
         spannableStringBuilder.append(text);
+        if (span == null) {
+            return;
+        }
         spannableStringBuilder.setSpan(span, wordPosition.start, wordPosition.end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
