@@ -97,6 +97,20 @@ public class AndroidSpan {
     }
 
     /**
+     * 同比放大索小
+     *
+     * @param text
+     * @param size
+     * @return
+     */
+    public AndroidSpan drawRelativeSize(String text, float size) {
+        RelativeSizeSpan span = new RelativeSizeSpan(size);
+        drawSpan(text, span);
+        return this;
+    }
+
+
+    /**
      * URL效果
      * 需要实现textView.setMovementMethod(LinkMovementMethod.getInstance());
      *

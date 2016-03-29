@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private void setText() {
         AndroidSpan androidSpan = new AndroidSpan()
                 .drawBulletSpan("bullet", 40, Color.GREEN)
+                .drawRelativeSize("我要变大", 2.0f)
                 .drawUnderlineSpan("测试文本")
                 .drawForegroundColor("红色的文本", Color.RED)
                 .drawImageSpan("来个图片试试", getApplicationContext(), R.mipmap.ic_launcher)
